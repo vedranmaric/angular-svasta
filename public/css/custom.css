@@ -1,0 +1,17 @@
+.active{
+	background: #fff;
+}
+.page{
+	min-height:calc(100vh - 104px);
+	position:absolute;
+	top:74px;
+}
+@keyframes slideInRight {
+    from    { transform:translateX(100%); }
+    to      { transform: translateX(0); }
+}
+@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+.page.ng-enter           { animation: slideInRight 0.5s both ease-in; z-index: 8888; }
+ .page.ng-leave           { animation: slideOutLeft 0.5s both ease-in; z-index: 9999; }

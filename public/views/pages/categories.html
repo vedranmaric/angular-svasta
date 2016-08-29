@@ -1,0 +1,64 @@
+<div class="container-fluid" id="contact">
+	<div class="row">
+		<div class="col-md-3  sidebar">
+			<h2 ng-click="setCurrentCategory(null)">Categories: </h2>
+			<ul class="nav nav-sidebar">
+				<li ng-class="{'active':isCurrentCategory(category)}" ng-repeat="category in categories">
+					<a href ng-click="setCurrentCategory(category)">{{ category.name }}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-9 main">
+			<h2>Links: </h2>
+			<div ng-class="{'active':isSelectedLink(link)}" ng-repeat="link in links | filter:{cat_id:currentCategory.id}">
+				<button class="close" ng-click="deleteLink(link)">&times</button>
+				<button class="btn btn-link" ng-click="startEditing(link)"><i class="fa fa-pencil-square-o"></i></button>
+				<a href="{{ link.url }}" target="_blank"><strong>{{ link.title }}</strong></a>
+			</div>
+			<!--Creating -->
+			<div ng-if="shouldShowCreating()">
+				
+				<button ng-if="!isCreating" class="btn btn-default btn-lg" ng-click="startCreating()">
+					<i class="fa fa-plus-circle" aria-hidden="true"></i>
+					Create Link	
+				</button>
+				
+				<form class="create-form" ng-if="isCreating" role="form" ng-submit="createLink(newLink)">
+					<div class="form-group">
+						<label for="newLinkTitle">Link Title</label>
+						<input type="text" class="form-control" id="newLinkTitle" ng-model="newLink.title" placeholder="Enter Title">
+					</div>
+					<div class="form-group">
+						<label for="newLinkUrl">Link URL</label>
+						<input type="text" class="form-control" id="newLinkUrl" ng-model="newLink.url" placeholder="Enter URL">
+					</div>
+					<button type="submit" class="btn btn-info btn-lg">Create</button>
+					<button ng-if="isCreating" class="btn btn-default btn-lg" ng-click="cancelCreating()">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+						Cancel  	
+					</button>
+				</form>
+			</div>
+			<!--Editing -->
+			<div ng-if="shouldShowEditing()">
+				<h4>Editing {{ editedLink.title }}</h4>
+				<form class="edit-form"  role="form" ng-submit="updateLink(editedLink)">
+					<div class="form-group">
+						<label >Link Title</label>
+						<input type="text" class="form-control" id="newLinkTitle" ng-model="editedLink.title" placeholder="Enter Title">
+					</div>
+					<div class="form-group">
+						<label for="newLinkUrl">Link URL</label>
+						<input type="text" class="form-control" id="editedLinkUrl" ng-model="editedLink.url" placeholder="Enter URL">
+					</div>
+					<button type="submit" class="btn btn-info btn-lg">Save Changes</button>
+					<button class="btn btn-default btn-lg" ng-click="cancelEditing()">
+						<i class="fa fa-arrow-left" aria-hidden="true"></i>
+						Cancel Editing 	
+					</button>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
